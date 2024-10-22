@@ -1,12 +1,25 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export const Countries = () => {
   const [countryCode, setCountryCode] = useState("AU")
   const [data, setData] = useState(null)
 
-  //const URL = `https://restcountries.com/v2/alpha/${countryCode}`
+  const URL = `https://restcountries.com/v2/alpha/${countryCode}`
 
-  const handleChange = (e) => {}
+  
+  useEffect(() => {
+    const fetchCountry = async () => {
+      const response = await fetch(URL)
+      const data = await response.json()
+      setData(data)
+    };
+    
+    fetchCountry()
+  }, [countryCode])
+    
+  const handleChange = (event) => {
+    setCountryCode(event.target.value)
+  }
 
   return (
     <section className="light">
